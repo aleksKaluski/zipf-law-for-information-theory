@@ -29,13 +29,12 @@ def tag_paragraph_with_spacy(doc) -> list:
     return clean_tokens
 
 
-def tag_df_with_spacy(df, nlp: spacy.language.Language, column_names: list, delimiter: str =';') -> pd.DataFrame:
+def tag_df_with_spacy(df, nlp: spacy.language.Language, column_names: list) -> pd.DataFrame:
     """
-    Cleans unwanted spacy tags from a csv file and returns lemmas. Operates chosen on columns.
-    :param df: pandas dataframe or path to csv file
+    Cleans unwanted spacy tags from a pkl file and returns lemmas. Operates chosen on columns.
+    :param df: pandas dataframe or path to pkl file
     :param nlp: spacy language object
     :param column_names: list of column names to clean
-    :param delimiter: csv delimiter
     :return: pandas dataframe
     """
 
@@ -44,7 +43,7 @@ def tag_df_with_spacy(df, nlp: spacy.language.Language, column_names: list, deli
         # check if file is empty
         try:
             assert os.path.getsize(df) != 0
-            df = pd.read_csv(df, delimiter=delimiter)
+            df = pd.read_pickle(df)
         except AssertionError:
             print(f"File {df} is empty!")
 
@@ -58,7 +57,7 @@ def tag_df_with_spacy(df, nlp: spacy.language.Language, column_names: list, deli
         for index, text in df[column].items():
             doc = nlp(text)
             clean_tokens = tag_paragraph_with_spacy(doc)
-            df.at[index, new_name] = clean_tokens
+            df.at[index, new_name] = [clean_tokens]
     return df
 
 
