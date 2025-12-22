@@ -5,7 +5,7 @@ import pandas as pd
 from scipy.stats import false_discovery_control
 
 
-def tag_paragraph_with_spacy(doc):
+def tag_paragraph_with_spacy(doc) -> list:
     """
     Cleans unwanted spacy tags from a document and returns lemmas.
     :param doc: doc Spacy object
@@ -29,30 +29,36 @@ def tag_paragraph_with_spacy(doc):
     return clean_tokens
 
 
-def tag_csvfile_with_spacy(file_path: str, nlp: spacy.language.Language, column_name: str) -> pd.DataFrame:
+def tag_df_with_spacy(df, nlp: spacy.language.Language, column_names: list, delimiter: str =';') -> pd.DataFrame:
     """
-    Cleans unwanted spacy tags from a csv file and returns lemmas.
-    :return: pandas.DataFrame
+    Cleans unwanted spacy tags from a csv file and returns lemmas. Operates chosen on columns.
+    :param df: pandas dataframe or path to csv file
+    :param nlp: spacy language object
+    :param column_names: list of column names to clean
+    :param delimiter: csv delimiter
+    :return: pandas dataframe
     """
 
-    # check if file is empty
-    try:
-        assert os.path.getsize(file_path) != 0
-    except AssertionError:
-        print(f"File {file_path} is empty!")
+    # in case you pass a file path
+    if isinstance(df, str):
+        # check if file is empty
+        try:
+            assert os.path.getsize(df) != 0
+            df = pd.read_csv(df, delimiter=delimiter)
+        except AssertionError:
+            print(f"File {df} is empty!")
 
+    for column in column_names:
+        print(f'Cleaning column "{column}"...')
+        # add clean text column for lemmas
+        new_name = column +'_clean'
+        df[new_name] = None
 
-    # open csv in pandas
-    df = pd.read_csv(file_path, delimiter=';')
-
-    # add clean text column for lemmas
-    df[column_name +'_clean'] = None
-
-    # iterate though rows and make a clean representation
-    for index, row in df[column_name].iterrows():
-        doc = nlp(row)
-        clean_tokens = tag_paragraph_with_spacy(doc)
-        df.at[index, 'Clean Text'] = clean_tokens
+        # iterate though rows and make a clean representation
+        for index, text in df[column].items():
+            doc = nlp(text)
+            clean_tokens = tag_paragraph_with_spacy(doc)
+            df.at[index, new_name] = clean_tokens
     return df
 
 
