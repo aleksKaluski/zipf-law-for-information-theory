@@ -1,6 +1,6 @@
 import pandas as pd
 import spacy
-from source import tokenizator as tk
+from source import tokenizator_and_preprocessing as tk
 
 df = pd.read_pickle('dfs/preprocessed-df.pkl')
 df.head()

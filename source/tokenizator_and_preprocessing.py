@@ -1,6 +1,7 @@
 import os
 import spacy
 import pandas as pd
+import re
 
 
 def tag_paragraph_with_spacy(doc) -> list:
@@ -57,3 +58,28 @@ def tag_df_with_spacy(df, nlp: spacy.language.Language, column_names: list) -> p
     return df
 
 
+def extract_content(conversation: dict):
+    """
+    Unwraps original dictionary with student's and professor utterances.
+    :param conversation: dict with utterances
+    :return: list of professor utterances and student utterances
+    """
+    professor = []
+    user = []
+    for turn in conversation:
+        # print(turn)
+        # print('-'*20)
+        if turn['role'] == 'user':
+            user.append(turn['content'])
+        else:
+            professor.append(turn['content'])
+    return professor, user
+
+
+def prepare_prompt(prompt: str):
+    """
+    Cleans the redundant content from each prompt. Designed to use with lambda.
+    :param prompt: prompt to clean
+    :return: cleaned prompt
+    """
+    return re.findall(r'\"([\s\S]+?)\"', prompt)
