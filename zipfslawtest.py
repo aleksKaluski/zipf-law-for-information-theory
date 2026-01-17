@@ -1,4 +1,4 @@
-import zipfslaw
+from source import zipfslaw as zl
 
 
 def main():
