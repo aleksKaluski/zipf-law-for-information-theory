@@ -38,6 +38,8 @@ Other dependencies can be downloaded with this command:
 
 `pip install -r /your/path/to/requirements.txt`
 
+`pip install numpy pandas seaborn wordcloud matplotlib spacy gensim pyldavis optuna fastparquet pyarrow huggingface_hub`
+
 ### Sources of code
 #### Online 
 - https://www.geeksforgeeks.org/python/extract-dictionary-value-from-column-in-data-frame/
