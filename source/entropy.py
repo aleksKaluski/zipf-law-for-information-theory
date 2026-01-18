@@ -11,7 +11,7 @@ from collections import Counter
 def shannon_entropy(data):
     if not data:
         print("Input string is empty.")
-        return 0.0
+        return 0.0000000001 # to avoid /0
 
     symbol_counts = Counter(data)
     length = len(data)
@@ -36,15 +36,16 @@ def print_entropy(paragraph: str = "Hello World!"):
         print(f"\nMetric entropy: {bits / len(paragraph):.5f}")
 
 
-def compute_entropy_for_paraph(paragraph: str = "Hello World!"):
+def compute_entropy_for_paraph(paragraph: str = "Hello World!", word_level:bool = False):
+    if len(paragraph) == 0: # avoid diving by 0
+        return 0.0000000001
     bits = shannon_entropy(paragraph)
-    return round(bits / len(paragraph), 5)
+    result = round(bits / len(paragraph), 5)
+    return result
+
 
 
 def compute_entropy_dataset(df: pd.DataFrame, columns: list):
     for column in columns:
         df[str(column + "_ent")] = df[column].apply(lambda x: compute_entropy_for_paraph(x))
-
-
-
     return df

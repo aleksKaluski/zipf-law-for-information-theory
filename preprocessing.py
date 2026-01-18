@@ -11,8 +11,7 @@ from source import tokenizator_and_preprocessing as tp
 df_full = pd.read_parquet("hf://datasets/ruggsea/stanford-encyclopedia-of-philosophy_chat_multi_turn/data/train-00000-of-00001.parquet")
 
 # work on mock dataset (50 first rows) for writing the code
-df = df_full.head(20)
-
+df = df_full
 # Split the conversation into various rows in df
 # select utterances of professor
 df['professor'] = df['conversation'].apply(lambda x: tp.extract_content(x)[0])
@@ -29,7 +28,7 @@ df = df.explode(["professor", "student"]) # powerful line! creates a pair of stu
 # explode made unwrapped columns 'professor' and 'student' to strings. For consitency we have to do the sam with 'prompt'
 df['prompt'] = df['prompt'].apply(lambda x: ' '.join(map(str, x)))
 
-df.to_pickle('dfs/preprocessed-df.pkl') # save it for future work
+# df.to_pickle('dfs/preprocessed-df.pkl') # save it for future work
 
 """
 2. Tokenize the data
@@ -37,3 +36,4 @@ df.to_pickle('dfs/preprocessed-df.pkl') # save it for future work
 
 nlp = spacy.load('en_core_web_sm')
 df_clean = tp.tag_df_with_spacy(df=df, nlp=nlp, column_names=['professor', 'student', 'prompt'])
+df.to_pickle('dfs/preprocessed-cleaned-df.pkl')
