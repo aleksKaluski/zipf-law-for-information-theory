@@ -36,4 +36,6 @@ df['prompt'] = df['prompt'].apply(lambda x: ' '.join(map(str, x)))
 
 nlp = spacy.load('en_core_web_sm')
 df_clean = tp.tag_df_with_spacy(df=df, nlp=nlp, column_names=['professor', 'student', 'prompt'])
+
 df.to_pickle('dfs/preprocessed-cleaned-df.pkl')
+df.to_csv('dfs/preprocessed-cleaned-df.csv')
