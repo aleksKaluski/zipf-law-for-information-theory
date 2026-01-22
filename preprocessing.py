@@ -9,7 +9,7 @@ from source import tokenizator_and_preprocessing as tp
 
 # load the dataset from HF
 df_full = pd.read_parquet("hf://datasets/ruggsea/stanford-encyclopedia-of-philosophy_chat_multi_turn/data/train-00000-of-00001.parquet")
-
+# df_full = df_full.head(50)
 # work on mock dataset (50 first rows) for writing the code
 df = df_full
 # Split the conversation into various rows in df
@@ -35,7 +35,11 @@ df['prompt'] = df['prompt'].apply(lambda x: ' '.join(map(str, x)))
 """
 
 nlp = spacy.load('en_core_web_sm')
-df_clean = tp.tag_df_with_spacy(df=df, nlp=nlp, column_names=['professor', 'student', 'prompt'])
+df_clean = tp.tag_df_with_spacy(df=df, nlp=nlp, column_names=['professor', 'student', 'prompt'], lemmatize=False)
+df_clean = tp.tag_df_with_spacy(df=df_clean, nlp=nlp, column_names=['professor', 'student'], lemmatize=True)
+
+print(df_clean.head())
+print(df_clean.info())
 
 df.to_pickle('dfs/preprocessed-cleaned-df.pkl')
 df.to_csv('dfs/preprocessed-cleaned-df.csv')
