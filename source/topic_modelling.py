@@ -8,6 +8,10 @@ import matplotlib.pyplot as plt
 
 
 def create_LDA_model(corpus, num_topics, id2word, passes):
+    """
+    Intialize the LDA model based on the provided parameters.
+    """
+
 
     lda_model = gensim.models.LdaMulticore(corpus,
                                            num_topics=num_topics,
@@ -18,6 +22,9 @@ def create_LDA_model(corpus, num_topics, id2word, passes):
 
 
 def evaluate_coherence(model, texts: list[list[str]], dictionary: Dictionary, coherence: str) -> float:
+    """
+    Evaluate the coherence of topic distribution.
+    """
     coherence_model_lda = CoherenceModel(model=model,
                                          texts=texts,
                                          dictionary=dictionary,
@@ -26,6 +33,9 @@ def evaluate_coherence(model, texts: list[list[str]], dictionary: Dictionary, co
 
 
 def find_best_LDA(corpus, id2word, passes, texts, coherence, n_trials = 3):
+    """
+    Perfom optuna optimization by searching for the best parameters for LDA models.
+    """
 
     def single_study(trial):
         num_topics = trial.suggest_int("num_topics", 2, 20)
@@ -61,6 +71,9 @@ def find_best_LDA(corpus, id2word, passes, texts, coherence, n_trials = 3):
 
 
 def plot_LDA_search_results(df):
+    """
+    Plot HTML results of topic modelling.
+    """
     df = df.sort_values(by=['params_num_topics'], ascending=False)
     num_topics = df['params_num_topics']
     coherence = df['coherence_score']

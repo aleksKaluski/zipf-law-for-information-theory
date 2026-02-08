@@ -22,6 +22,60 @@ In our analysis, we aim to employ the steps in Python characterized below:
 - Compute shannonian entropies for each prompt and response
 - Computing Zipf’s law for the set of LLaMA responses to check whether the law is a proper description of LLaMA’s way of using the language
 
+### Methodology
+The data which we use has to be diverse. On one hand, we need to include original text data (whole sentences) in order
+to meassure it's entropy, average word-lengh etc. On the other, while performing topic modelling or generating 
+wordclouds, we have to use lemmas. Therefore, we decided to keep raw and tokenized representations of the text as wel as 
+clened lemma-based represenations.
+
+#### Data preprocessing
+1. Loading dataset into a dataframe 
+2. Clean and tokenize the data with spaCy. 
+3. Creating additional columns without stopwords.
+
+### Exploratory analysis
+#### General statistical description
+The general analysis was performed in jupiter notebook (see `analysis.ipnyb` file). It consists of two parts. In the first one,
+we perform standard quantitavie measures of the text such as average utterance length, 30 most popular words, the average lenght 
+of words and wordclounds. Each of these operations is performed uniquely for student and professor. The second part in the second 
+part we perform LDA topic modelling (a single analysis for student and professor). 
+
+#### Zipf's law and entropy
+The main goal of the project was providing the measures of Zipfian distribution over AI-generated text and examining the
+entropy of this text.  Zipf's law can be understood as follows: _the Zipfian frequency of a word is inversely proportional to it's rank._
+We implemented it by introducing the following equation: 
+
+$$f_n = \frac{f_1}{n}$$ 
+
+Where:
+- $f_n$ is the Zipfian frequency of $n$ the word
+- $f_1$ is the frequency of the most popular word
+- $n$ is the index (sorted hierarchy of frequencies) of the $n$ word
+
+In case of the entropy, we followed the implementation provided in this repository: [entropy](https://github.com/ambron60/shannon-entropy-calculator).
+It's a classical, Shanonian implementation which can be described as:
+
+$$H(X) = -\sum_{i=1}^{n} P(x_i) \log_2 P(x_i)$$
+
+Where:
+- $P(x_i)$ is the probability of specific character
+- $\log_2$ is logarithm sith basis 2 (describes a unit in bits)
+
+However, the novelty of this repository is the fact that it intoduces also the Metric Entropy, which takes tha classical
+formula and divides it by the length of the encoded string. 
+
+$$H_{metric}(X) = \frac{-\sum_{i=1}^{n} P(x_i) \log_2 P(x_i)}{l}$$
+
+Where:
+- $P(x_i)$ is the probability of specific character
+- $\log_2$ is logarithm sith basis 2 (describes a unit in bits)
+- $l$ is the length of the encoded string
+
+Essentially, Metric Entropy represent the minimal number of bits that has to be employed to encode the information
+provided in a specific string. Therefore, it's an intuitive implementation of how much redundant is content of the string.
+As a analytic philosopher might put it, Metric Entropy quantifies exactly how much of an utterance could have been
+condensed into a single, short email.
+
 ***
 ## Computer science
 
@@ -36,13 +90,15 @@ and download **en_core_web_sm** spacy model (tokenization)
 
 Other dependencies can be downloaded with this command:
 
-`pip install -r /your/path/to/requirements.txt`
-
 `pip install numpy pandas seaborn wordcloud matplotlib spacy gensim pyldavis optuna fastparquet pyarrow huggingface_hub`
 
 ### Sources of code
 #### Online 
 - https://www.geeksforgeeks.org/python/extract-dictionary-value-from-column-in-data-frame/
 - https://www.geeksforgeeks.org/python/how-to-add-empty-column-to-dataframe-in-pandas/
+- https://www.geeksforgeeks.org/nlp/zipfs-law/
+- https://codedrome.substack.com/p/zipfs-law-in-python
+- https://neptune.ai/blog/exploratory-data-analysis-natural-language-processing-tools
 #### GitHub repositories
 - https://github.com/CodeDrome/zipfs-law-python
+- https://github.com/ambron60/shannon-entropy-calculator

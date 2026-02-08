@@ -1,5 +1,9 @@
-import collections
+"""
+Implements the Zipf's law
+Source: https://codedrome.substack.com/p/zipfs-law-in-python
+"""
 
+import collections
 
 def generate_zipf_table(text, top):
 
