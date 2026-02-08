@@ -40,6 +40,14 @@ we perform standard quantitavie measures of the text such as average utterance l
 of words and wordclounds. Each of these operations is performed individually for student and professor. In the second 
 part we perform LDA topic modelling (a single analysis for student and professor). 
 
+![alt text](Images/num_student.png)
+![alt text](Images/num_prof.png)
+![alt text](Images/avg_student.png)
+![alt text](Images/avg_prof.png)
+![alt text](Images/top_student.png)
+![alt text](Images/top_prof.png)
+![alt text](Images/LDA.png)
+
 #### Zipf's law and entropy
 The main goal of the project was providing the measures of Zipfian distribution over AI-generated text and examining the
 entropy of this text.  Zipf's law can be understood as follows: _the Zipfian frequency of a word is inversely proportional to it's rank._
@@ -77,9 +85,17 @@ As a analytic philosopher might put it, Metric Entropy quantifies exactly how mu
 condensed into a single, short email.
 
 #### Results/Conclusion
-The dataset followed Zipf's law to a close approximation (in comparison to two human-generated texts which also folowed a Zipfian distribution) such that it could be considered Zipf-like. Unlike the Zipf-Mandelbrot law, which incorporates some fitting parameters in the denominator, the simple n/rank method often diverges from a pure Zipfian distribution, which we believe does not nullify our conclusion. We concluded that Zipf's law lies at least in the syntactic structure of language, since both human and machine generated texts seem to follow this law to a similar approximation. There is also another possiblity which we explore in the discussion. 
+The dataset followed Zipf's law to a close approximation (in comparison to two human-generated texts: the Tempest, and Swan's Way, which also folowed a Zipfian distribution) such that it could be considered Zipf-like. Unlike the Zipf-Mandelbrot law, which incorporates some fitting parameters in the denominator, the simple n/rank method often diverges from a pure Zipfian distribution, which we believe does not nullify our conclusion. We concluded that Zipf's law lies at least in the syntactic structure of language, since both human and machine generated texts seem to follow this law to a similar approximation. There is also another possiblity which we explore in the discussion. 
+
+![alt text](Images/dataset.png)
+![alt text](Images/tempest.png)
+![alt text](Images/swan.png)
 
 The entropy data reflected a recurrence pattern which became more pronounced from a character analysis to a lemma analysis, as is to be expected. Given that the entropy of the english language is very low at the character level, but there are many possible word choices to express an idea, it makes sense that the entropy increases in general from analysis on the level of character to word, and then from word to lemma. 
+
+![alt text](Images/ent_char.png)
+![alt text](Images/ent_word.png)
+![alt text](Images/ent_lemma.png)
 
 #### Discussion
 Since LLMs exhibit Zipfian characteristics similar to those found in human generated texts, it seems that Zipfs law governs syntactic relations rather than semantic. We can say that either Zipf’s law is a description of the logical form of the language or it’s a general property of all ranked datasets. Although we did not include it in this analysis, there is evidence that other types of ranked data such as population or enconomics also follow a Zipf-like distribution, meaning that Zipf's law may not be a rule for syntax, as we propose, but rather a general property of all normally distributed and ranked data sets. 
