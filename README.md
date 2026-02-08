@@ -25,7 +25,7 @@ In our analysis, we aim to employ the steps in Python characterized below:
 ### Methodology
 The data which we use has to be diverse. On one hand, we need to include original text data (whole sentences) in order
 to meassure it's entropy, average word-lengh etc. On the other, while performing topic modelling or generating 
-wordclouds, we have to use lemmas. Therefore, we decided to keep raw and tokenized representations of the text as wel as 
+wordclouds, we have to use lemmas. Therefore, we decided to keep raw and tokenized representations of the text as well as 
 clened lemma-based represenations.
 
 #### Data preprocessing
@@ -36,8 +36,8 @@ clened lemma-based represenations.
 ### Exploratory analysis
 #### General statistical description
 The general analysis was performed in jupiter notebook (see `analysis.ipnyb` file). It consists of two parts. In the first one,
-we perform standard quantitavie measures of the text such as average utterance length, 30 most popular words, the average lenght 
-of words and wordclounds. Each of these operations is performed uniquely for student and professor. The second part in the second 
+we perform standard quantitavie measures of the text such as average utterance length, 30 most popular words, the average length 
+of words and wordclounds. Each of these operations is performed individually for student and professor. In the second 
 part we perform LDA topic modelling (a single analysis for student and professor). 
 
 #### Zipf's law and entropy
@@ -61,7 +61,7 @@ Where:
 - $P(x_i)$ is the probability of specific character
 - $\log_2$ is logarithm sith basis 2 (describes a unit in bits)
 
-However, the novelty of this repository is the fact that it intoduces also the Metric Entropy, which takes tha classical
+However, the novelty of this repository is the fact that it intoduces also the Metric Entropy, which takes the classical
 formula and divides it by the length of the encoded string. 
 
 $$H_{metric}(X) = \frac{-\sum_{i=1}^{n} P(x_i) \log_2 P(x_i)}{l}$$
@@ -72,9 +72,21 @@ Where:
 - $l$ is the length of the encoded string
 
 Essentially, Metric Entropy represent the minimal number of bits that has to be employed to encode the information
-provided in a specific string. Therefore, it's an intuitive implementation of how much redundant is content of the string.
+provided in a specific string. Therefore, it's an intuitive implementation of how redundant the content of the string is.
 As a analytic philosopher might put it, Metric Entropy quantifies exactly how much of an utterance could have been
 condensed into a single, short email.
+
+#### Results/Conclusion
+The dataset followed Zipf's law to a close approximation (in comparison to two human-generated texts which also folowed a Zipfian distribution) such that it could be considered Zipf-like. Unlike the Zipf-Mandelbrot law, which incorporates some fitting parameters in the denominator, the simple n/rank method often diverges from a pure Zipfian distribution, which we believe does not nullify our conclusion. We concluded that Zipf's law lies at least in the syntactic structure of language, since both human and machine generated texts seem to follow this law to a similar approximation. There is also another possiblity which we explore in the discussion. 
+
+The entropy data reflected a recurrence pattern which became more pronounced from a character analysis to a lemma analysis, as is to be expected. Given that the entropy of the english language is very low at the character level, but there are many possible word choices to express an idea, it makes sense that the entropy increases in general from analysis on the level of character to word, and then from word to lemma. 
+
+#### Discussion
+Since LLMs exhibit Zipfian characteristics similar to those found in human generated texts, it seems that Zipfs law governs syntactic relations rather than semantic. We can say that either Zipf’s law is a description of the logical form of the language or it’s a general property of all ranked datasets. Although we did not include it in this analysis, there is evidence that other types of ranked data such as population or enconomics also follow a Zipf-like distribution, meaning that Zipf's law may not be a rule for syntax, as we propose, but rather a general property of all normally distributed and ranked data sets. 
+
+The entropy results were quite interesting, as one moves up in scale of granularity from characterwise to lemmawise calculations, the chart begins to resemble a recurrence plot with consistent points of confluence. While we did not compare the entropy of the dataset to a control dataset such as a human conversation, it is probable that the entropy would not display such consistent behavior from entirely human generated text. at least, in general, the entropy of a response ought to be expected to be lower than that of teh question, in a dialogue, as the options for response are pre-limited by the question being posed. 
+
+
 
 ***
 ## Computer science

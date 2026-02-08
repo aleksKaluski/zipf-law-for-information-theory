@@ -80,7 +80,7 @@ def _create_zipf_table(frequencies):
         relative_frequency = "1/{}".format(index)
         zipf_frequency = top_frequency * (1 / index)
         difference_actual = item[1] - zipf_frequency
-        difference_percent = (item[1] / zipf_frequency) * 100
+        difference_percent = (difference_actual / zipf_frequency) * 100
 
         zipf_table.append({"word": item[0],
                            "actual_frequency": item[1],
